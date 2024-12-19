@@ -1,0 +1,21 @@
+:root {
+	--border-width: 0.5px;
+	--grid-size: 32;
+	--grid-width: 600px;
+}
+
+.grid {
+	display: grid;
+	width: var(--grid-width);
+	height: var(--grid-width);
+	grid-template-columns: repeat(var(--grid-size), 1fr);
+	grid-template-rows: repeat(var(--grid-size), 1fr);
+	border: var(--border-width) solid rgb(83, 83, 83);
+}
+
+.cell {
+	background-color: rgb(255, 223, 223);
+	border: var(--border-width) solid rgb(83, 83, 83);
+	cursor: pointer;
+	transition: background-color 0s;
+}
