@@ -1,4 +1,4 @@
-import { createLine } from './shapes/line.js';
+import { createLine, createRotatedLine } from './shapes/line.js';
 import { createBox } from './shapes/box.js';
 import { createCircle } from './shapes/circle.js';
 import {
@@ -17,18 +17,29 @@ let isEraser = false;
 function generateGrid() {
 	const grid = document.querySelector('.grid');
 	let isDrawing = false;
+	let isRightClick = false;
 
-	grid.addEventListener('mousedown', () => {
+	// Prevent the context menu from appearing when right-clicking
+	// just in the grid
+	grid.addEventListener('contextmenu', (event) => event.preventDefault());
+
+	grid.addEventListener('mousedown', (event) => {
 		isDrawing = true;
+		if (event.button === 2) {
+			// Right-click
+			isRightClick = true;
+		}
 	});
 
 	grid.addEventListener('mouseup', () => {
 		isDrawing = false;
+		isRightClick = false;
 		updateHistory(); // Don't save history every single pixel
 	});
 
 	grid.addEventListener('mouseleave', () => {
 		isDrawing = false;
+		isRightClick = false;
 		updateHistory();
 	});
 
@@ -50,7 +61,7 @@ function generateGrid() {
 			}
 		};
 
-		// This event listener prevent mousedown to save history when dragging
+		// This event listener prevents mousedown to save history when dragging
 		cell.addEventListener('click', () => {
 			cell.style.backgroundColor = lineColor;
 			updateLabels();
@@ -58,16 +69,24 @@ function generateGrid() {
 		});
 
 		// Paint the clicked cell
-		cell.addEventListener('mousedown', () => {
-			cell.style.backgroundColor = lineColor;
+		cell.addEventListener('mousedown', (event) => {
+			if (event.button === 0) {
+				// Left-click
+				cell.style.backgroundColor = lineColor;
+			} else if (event.button === 2) {
+				// Right-click
+				cell.style.backgroundColor = backgroundColor;
+			}
 			updateLabels();
 			//updateHistory();
 		});
 
 		// Paint while dragging
 		cell.addEventListener('mouseenter', () => {
-			if (isDrawing && cell.style.backgroundColor === backgroundColor) {
-				cell.style.backgroundColor = lineColor;
+			if (isDrawing) {
+				cell.style.backgroundColor = isRightClick
+					? backgroundColor
+					: lineColor;
 				updateLabels();
 				// updateHistory(); // Save every single pixel
 			}
@@ -148,6 +167,31 @@ function undo() {
 function main() {
 	generateGrid();
 	undo();
+
+	/*const lineWidth = 10;
+	const center = [16, 16];
+
+	const angle1 = 0;
+	const angle2 = 360 / 20;
+	const angle3 = 360 / 12;
+	const angle4 = 360 / 10;
+	const angle5 = 360 / 8;*/
+
+	// 0 - 6
+	// 7 - 19
+	// 20 - 33
+	// 34 - 38
+	// 39 - 51
+
+	//createRotatedLine(center[0], center[1], lineWidth / 2, angle1, 'red');
+	//createRotatedLine(center[0], center[1], lineWidth / 2, angle2, 'green');
+	// createRotatedLine(center[0], center[1], lineWidth / 2, angle3, 'blue');
+	// createRotatedLine(center[0], center[1], lineWidth / 2, angle4, 'green');
+	// createRotatedLine(center[0], center[1], lineWidth / 2, angle5, 'red');
+	// createRotatedLine(center[0], center[1], lineWidth / 2, 75, 'red');
+
+	//createBox(16, 16, 9, 9, 10);
+
 	updateHistory();
 
 	// Eraser
@@ -184,13 +228,14 @@ function main() {
 		const y1 = Number(document.querySelector('#y1-box').value);
 		const x2 = Number(document.querySelector('#x2-box').value);
 		const y2 = Number(document.querySelector('#y2-box').value);
+		const angle = Number(document.querySelector('#angle-box').value);
 
 		const centerX = (x1 + x2) / 2;
 		const centerY = (y1 + y2) / 2;
 		const width = Math.abs(x2 - x1) + 1;
 		const height = Math.abs(y2 - y1) + 1;
 
-		createBox(centerX, centerY, width, height);
+		createBox(centerX, centerY, width, height, angle);
 		updateHistory();
 	});
 

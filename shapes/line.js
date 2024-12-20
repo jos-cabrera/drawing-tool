@@ -62,8 +62,15 @@ export function createLine(x1, y1, x2, y2, color = lineColor) {
 	}
 }
 
-function rotateLine(centerX, centerY, radius, angle, color = lineColor) {
+export function createRotatedLine(
+	centerX,
+	centerY,
+	radius,
+	angle,
+	color = lineColor
+) {
 	const radians = angle * (Math.PI / 180);
+
 	const x1 = Math.round(centerX + radius * Math.cos(radians));
 	const y1 = Math.round(centerY + radius * Math.sin(radians));
 	const x2 = Math.round(centerX - radius * Math.cos(radians));
@@ -77,7 +84,7 @@ export function createRotationLine(centerX, centerY, radius) {
 	const angleIncrement = 16;
 
 	setInterval(() => {
-		rotateLine(
+		createRotatedLine(
 			centerX,
 			centerY,
 			radius,
@@ -85,7 +92,7 @@ export function createRotationLine(centerX, centerY, radius) {
 			backgroundColor
 		); // Clear the previous line
 
-		rotateLine(centerX, centerY, radius, angle);
+		createRotatedLine(centerX, centerY, radius, angle);
 
 		angle = (angle + angleIncrement) % 360;
 	}, updateTime);
