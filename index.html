@@ -7,16 +7,45 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<div class="grid"></div>
-		<button id="clear-grid">Clear</button>
-		<div>
-			<input type="number" id="x1" />
-			<input type="number" id="y1" />
-			<input type="number" id="x2" />
-			<input type="number" id="y2" />
+		<main>
+			<div class="grid"></div>
+			<div>
+				<p>
+					Last clicked:
+					<span id="x-label"></span>,
+					<span id="y-label"></span>
+				</p>
 
-			<button id="draw-line">Draw</button>
-		</div>
-		<script src="script.js"></script>
+				<div class="line-input">
+					<input type="number" id="x1" placeholder="x1" />
+					<input type="number" id="y1" placeholder="y1" />
+					<input type="number" id="x2" placeholder="x2" />
+					<input type="number" id="y2" placeholder="y2" />
+
+					<button id="draw-line">Draw Line</button>
+				</div>
+				<div class="box-input">
+					<input type="number" id="x1-box" placeholder="x1" />
+					<input type="number" id="y1-box" placeholder="y1" />
+					<input type="number" id="x2-box" placeholder="x2" />
+					<input type="number" id="y2-box" placeholder="y2" />
+					<button id="draw-box">Draw Box</button>
+				</div>
+
+				<div class="circle-input">
+					<input type="number" id="x-circle" placeholder="center x" />
+					<input type="number" id="y-circle" placeholder="center y" />
+					<input
+						type="number"
+						id="radius-circle"
+						placeholder="radius" />
+					<button id="draw-circle">Draw Circle</button>
+				</div>
+
+				<button id="clear-grid">Clear</button>
+				<button id="eraser">Eraser</button>
+			</div>
+		</main>
+		<script src="script.js" type="module"></script>
 	</body>
 </html>

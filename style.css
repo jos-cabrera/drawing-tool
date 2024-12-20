@@ -1,21 +1,49 @@
 :root {
-	--border-width: 0.5px;
+	--border-width: 0px;
 	--grid-size: 32;
 	--grid-width: 600px;
+	--cell-color: rgb(255, 223, 223);
+	--cell-border-color: rgb(179, 179, 179);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+}
+
+main {
+	margin: auto;
+	display: flex;
+	width: 100%;
+	max-width: 1024px;
+	height: 100dvh;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .grid {
 	display: grid;
-	width: var(--grid-width);
-	height: var(--grid-width);
+	width: min(var(--grid-width), 90dvh);
+	height: min(var(--grid-width), 90dvh);
 	grid-template-columns: repeat(var(--grid-size), 1fr);
 	grid-template-rows: repeat(var(--grid-size), 1fr);
-	border: var(--border-width) solid rgb(83, 83, 83);
+	aspect-ratio: 1 / 1;
+	border: var(--border-width) solid var(--cell-border-color);
 }
 
 .cell {
-	background-color: rgb(255, 223, 223);
-	border: var(--border-width) solid rgb(83, 83, 83);
+	background-color: var(--cell-color);
+	border: var(--border-width) solid var(--cell-border-color);
 	cursor: pointer;
 	transition: background-color 0s;
+}
+
+input[type='number'] {
+	width: 5em;
+}
+
+button {
+	cursor: pointer;
 }
