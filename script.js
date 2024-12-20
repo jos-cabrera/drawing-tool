@@ -27,6 +27,11 @@ function generateGrid() {
 		updateHistory(); // Don't save history every single pixel
 	});
 
+	grid.addEventListener('mouseleave', () => {
+		isDrawing = false;
+		updateHistory();
+	});
+
 	// Generate grid cells
 	for (let i = 0; i < gridSize; i++) {
 		const cell = document.createElement('div');
